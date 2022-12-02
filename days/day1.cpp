@@ -2,9 +2,9 @@
 #include <fstream>
 #include <vector>
 
-#include "day1.h"
+#include "days.h"
 
-void AOC::Day1::Run() {
+void Days::Run1() {
     std::ifstream file("day1.txt");
     std::string line;
     std::vector<int> elves;

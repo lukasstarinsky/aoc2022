@@ -1,7 +1,8 @@
-#include "day1.h"
+#include "days.h"
 
 int main() {
-    AOC::Day1::Run();
+    // Days::Run1();
+    Days::Run2();
 
     return 0;
 }
