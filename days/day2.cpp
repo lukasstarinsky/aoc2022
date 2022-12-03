@@ -62,4 +62,6 @@ void Days::Run2() {
     }
 
     std::cout << "Part 2: " << totalScore << std::endl;
+
+    file.close();
 }

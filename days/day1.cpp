@@ -24,4 +24,6 @@ void Days::Run1() {
 
     std::cout << "Part 1: " << elves.front() << std::endl;
     std::cout << "Part 2: " << elves[0] + elves[1] + elves[2] << std::endl;
+
+    file.close();
 }
