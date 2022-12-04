@@ -2,38 +2,9 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 
 #include "days.h"
-
-auto GetCommonChars(std::string_view s1, std::string_view s2) -> std::vector<char> {
-    std::vector<char> common;
-
-    for (const auto &charS1: s1) {
-        for (const auto &charS2: s2) {
-            if (charS1 == charS2 && !std::count(common.begin(), common.end(), charS2)) {
-                common.push_back(charS2);
-            }
-        }
-    }
-
-    return common;
-}
-
-auto GetCommonChars(std::string_view s1, std::string_view s2, std::string_view s3) -> std::vector<char> {
-    std::vector<char> common;
-
-    for (const auto &charS1: s1) {
-        for (const auto &charS2: s2) {
-            for (const auto &charS3: s3) {
-                if (charS1 == charS2 && charS1 == charS3 && !std::count(common.begin(), common.end(), charS2)) {
-                    common.push_back(charS2);
-                }
-            }
-        }
-    }
-
-    return common;
-}
 
 auto CalculatePriority(char character) -> int {
     if (character >= 'a' && character <= 'z') {
@@ -43,6 +14,44 @@ auto CalculatePriority(char character) -> int {
     }
 
     return 0;
+}
+
+auto GetPriority(std::string_view s1, std::string_view s2) -> int {
+    std::unordered_map<char, bool> s1Chars;
+
+    for (const auto& charS1 : s1) {
+        s1Chars[charS1] = true;
+    }
+
+    int totalPriority = 0;
+    for (const auto& charS2 : s2) {
+        if (s1Chars[charS2]) {
+            totalPriority += CalculatePriority(charS2);
+            s1Chars[charS2] = false;
+        }
+    }
+
+    return totalPriority;
+}
+
+auto GetPriority(std::string_view s1, std::string_view s2, std::string_view s3) -> int {
+    std::unordered_map<char, bool> s1Chars;
+
+    for (const auto& charS1 : s1) {
+        s1Chars[charS1] = true;
+    }
+
+    int totalPriority = 0;
+    for (const auto& charS2 : s2) {
+        for (const auto &charS3: s3) {
+            if (charS2 == charS3 && s1Chars[charS2]) {
+                totalPriority += CalculatePriority(charS2);
+                s1Chars[charS2] = false;
+            }
+        }
+    }
+
+    return totalPriority;
 }
 
 void Part1(std::ifstream& file) {
@@ -55,11 +64,7 @@ void Part1(std::ifstream& file) {
         std::string_view firstPart(rucksack.c_str(), middle);
         std::string_view lastPart(rucksack.c_str() + middle, middle);
 
-        auto common = GetCommonChars(firstPart, lastPart);
-
-        for (const auto &character: common) {
-            totalPriority += CalculatePriority(character);
-        }
+        totalPriority += GetPriority(firstPart, lastPart);
     }
 
     std::cout << "Part 1: " << totalPriority << std::endl;
@@ -70,11 +75,7 @@ void Part2(std::ifstream& file) {
 
     int totalPriority = 0;
     while (file >> rucksack >> rucksack2 >> rucksack3) {
-        auto common = GetCommonChars(rucksack, rucksack2, rucksack3);
-
-        for (const auto &character: common) {
-            totalPriority += CalculatePriority(character);
-        }
+        totalPriority += GetPriority(rucksack, rucksack2, rucksack3);
     }
 
     std::cout << "Part 2: " << totalPriority << std::endl;
