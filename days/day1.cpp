@@ -22,6 +22,7 @@ void Days::Run1() {
 
     std::sort(elves.begin(), elves.end(), std::ranges::greater());
 
+    std::cout << "Day 1\n";
     std::cout << "Part 1: " << elves.front() << std::endl;
     std::cout << "Part 2: " << elves[0] + elves[1] + elves[2] << std::endl;
 

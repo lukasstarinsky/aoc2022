@@ -6,7 +6,7 @@
 
 #include "days.h"
 
-auto CalculatePriority(char character) -> int {
+static int CalculatePriority(char character) {
     if (character >= 'a' && character <= 'z') {
         return character - 96;
     } else if (character >= 'A' && character <= 'Z') {
@@ -16,7 +16,7 @@ auto CalculatePriority(char character) -> int {
     return 0;
 }
 
-auto GetPriority(std::string_view s1, std::string_view s2) -> int {
+static int GetPriority(std::string_view s1, std::string_view s2) {
     std::unordered_map<char, bool> s1Chars;
 
     for (const auto& charS1 : s1) {
@@ -34,7 +34,7 @@ auto GetPriority(std::string_view s1, std::string_view s2) -> int {
     return totalPriority;
 }
 
-auto GetPriority(std::string_view s1, std::string_view s2, std::string_view s3) -> int {
+static auto GetPriority(std::string_view s1, std::string_view s2, std::string_view s3) {
     std::unordered_map<char, bool> s1Chars;
 
     for (const auto& charS1 : s1) {
@@ -54,7 +54,7 @@ auto GetPriority(std::string_view s1, std::string_view s2, std::string_view s3) 
     return totalPriority;
 }
 
-void Part1(std::ifstream& file) {
+static void Part1(std::ifstream& file) {
     std::string rucksack;
 
     int totalPriority = 0;
@@ -70,7 +70,7 @@ void Part1(std::ifstream& file) {
     std::cout << "Part 1: " << totalPriority << std::endl;
 }
 
-void Part2(std::ifstream& file) {
+static void Part2(std::ifstream& file) {
     std::string rucksack, rucksack2, rucksack3;
 
     int totalPriority = 0;
@@ -84,6 +84,7 @@ void Part2(std::ifstream& file) {
 void Days::Run3() {
     std::ifstream file("day3.txt");
 
+    std::cout << "Day 3\n";
     Part1(file);
     file.clear();
     file.seekg(0, std::ios_base::beg);
