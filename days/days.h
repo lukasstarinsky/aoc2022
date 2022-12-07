@@ -6,4 +6,5 @@ namespace Days {
     void Run3();
     void Run4();
     void Run5();
+    void Run6();
 }
